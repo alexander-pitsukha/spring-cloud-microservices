@@ -1,0 +1,35 @@
+server:
+  port: 8081
+  forward-headers-strategy: framework
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:reviews
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  refresh:
+    expiration:
+      date:
+        in:
+          ms: 2592000000
+  expiration:
+    minute:
+      in:
+        ms: 900000
+  secret:
+    key: eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsInVzZXJJZCI6MSwidXNlclJvbGUiOiJBRE1JTiIsInRva2VuVHlwZSI6ImFjY2VzcyIsImlhdCI6

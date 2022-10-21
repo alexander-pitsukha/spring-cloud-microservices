@@ -1,0 +1,56 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+jwt:
+  secret:
+    key: eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsInVzZXJJZCI6MSwidXNlclJvbGUiOiJBRE1JTiIsInRva2VuVHlwZSI6ImFjY2VzcyIsImlhdCI6
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: identity-service
+          uri: lb://identity-service
+          predicates:
+            - Path=/identity/**
+          filters:
+            - RewritePath=/identity/(?<path>.*), /$\{path}
+        - id: movie-service
+          uri: lb://movie-service
+          predicates:
+            - Path=/movie/**
+          filters:
+            - AuthenticationFilterFactory
+            - RewritePath=/movie/(?<path>.*), /$\{path}
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+          filters:
+            - AuthenticationFilterFactory
+            - RewritePath=/order/(?<path>.*), /$\{path}
+        - id: supplier-service
+          uri: lb://supplier-service
+          predicates:
+            - Path=/supplier/**
+          filters:
+            - AuthenticationFilterFactory
+            - RewritePath=/supplier/(?<path>.*), /$\{path}
+        - id: review-service
+          uri: lb://review-service
+          predicates:
+            - Path=/review/**
+          filters:
+            - AuthenticationFilterFactory
+            - RewritePath=/review/(?<path>.*), /$\{path}
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs

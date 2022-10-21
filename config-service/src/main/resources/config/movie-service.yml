@@ -1,0 +1,26 @@
+server:
+  port: 8082
+  forward-headers-strategy: framework
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  datasource:
+    url: jdbc:hsqldb:mem:movies
+    driver-class-name: org.hsqldb.jdbc.JDBCDriver
+    username: sa
+    password: sa
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.HSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+feign:
+  hystrix:
+    enabled: true
