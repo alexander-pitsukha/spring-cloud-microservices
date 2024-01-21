@@ -9,14 +9,14 @@ eureka:
 
 spring:
   datasource:
-    url: jdbc:h2:mem:reviews
-    driver-class-name: org.h2.Driver
+    url: jdbc:derby:memory:local;create=true
+    driver-class-name: org.apache.derby.jdbc.EmbeddedDriver
     username: sa
     password: sa
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.DerbyTenSevenDialect
     hibernate:
       ddl-auto: update
     show-sql: true
