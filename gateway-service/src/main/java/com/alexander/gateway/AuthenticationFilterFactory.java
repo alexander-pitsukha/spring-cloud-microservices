@@ -8,11 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthenticationFilterFactory extends AbstractGatewayFilterFactory<Object> {
 
-    @Autowired
-    private AuthenticationFilter authenticationFilter;
+    private final AuthenticationFilter authenticationFilter;
 
-    public AuthenticationFilterFactory() {
+    @Autowired
+    public AuthenticationFilterFactory(AuthenticationFilter authenticationFilter) {
         super(Object.class);
+        this.authenticationFilter = authenticationFilter;
     }
 
     @Override
