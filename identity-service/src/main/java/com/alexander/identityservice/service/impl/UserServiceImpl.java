@@ -5,6 +5,7 @@ import com.alexander.identityservice.controller.request.UserBody;
 import com.alexander.identityservice.dto.UserDto;
 import com.alexander.identityservice.converter.UserToUserDtoConverter;
 import com.alexander.identityservice.model.User;
+import com.alexander.identityservice.repository.RefreshTokenRepository;
 import com.alexander.identityservice.repository.UserRepository;
 import com.alexander.identityservice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserToUserDtoConverter userToUserDtoConverter;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Override
     public List<UserDto> getUsers() {
@@ -29,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByEmail(final String email) {
+    public UserDto getUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
         return userToUserDtoConverter.convert(user);
     }
@@ -55,6 +57,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteUserById(Long userId) {
+        refreshTokenRepository.deleteByUserId(userId);
         userRepository.deleteById(userId);
     }
 
