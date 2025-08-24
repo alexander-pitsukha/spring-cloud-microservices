@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .and().csrf().disable().httpBasic().disable().formLogin().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/v3/api-docs/**", "/users/{userId}/role").permitAll()
+                .antMatchers("/actuator/health", "/actuator/health/liveness", "/actuator/health/readiness").permitAll().anyRequest().authenticated()
                 .antMatchers("/users/**").hasAnyAuthority(RoleType.ADMIN.getAuthority())
                 .anyRequest().authenticated().and().exceptionHandling().and().logout().permitAll();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
