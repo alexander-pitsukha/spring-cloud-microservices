@@ -30,6 +30,7 @@
         <dependency>
             <groupId>com.alexander</groupId>
             <artifactId>commons-lib</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
